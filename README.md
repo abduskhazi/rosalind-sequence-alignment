@@ -1,67 +1,55 @@
 # Rosalind Sequence Alignment
 
-> Implementations of **sequence-alignment algorithms from first principles**, developed through the Rosalind bioinformatics problem set.
+**Bioinformatics Algorithms — Implemented From Scratch**  
+**Result**: 9 DP alignment algorithms + 8 sequence utilities, all verified against Rosalind hidden test cases — zero library calls.
 
-This repository explores how dynamic programming and scoring models can be used to compare biological sequences and find optimal alignments.
+---
 
-```text
-Sequences
-    ↓
-Scoring Model
-    ↓
-Dynamic Programming
-    ↓
-Optimal Alignment
+## What's Here
+| Alignment (9) | Utilities (8) |
+|---------------|---------------|
+| Global / Local / Semi-Global | GC Content |
+| Edit Distance + Reconstruction | Point Mutations (Hamming) |
+| Constant Gap Penalty | DNA → RNA (transcription) |
+| Affine Gap / Affine Local | RNA → Protein (translation) |
+| Multiple Alignment (progressive) | DNA Rev Complement |
+| Scoring Matrices (BLOSUM/PAM) | DNA → Protein (6-frame) |
+| | Protein → mRNA (back-translation) |
+| | Nucleotide helpers |
+
+---
+
+## What Implementing Teaches You
+- **Affine gaps = 3 DP matrices** (M, Ix, Iy). Gap open vs extend changes everything.
+- **Local alignment = reset to 0**. Finding subsequences, not full alignment.
+- **Space optimization** (Hirschberg): 2 rows for score, full matrix for traceback.
+- **Multiple alignment is NP-hard**. Progressive heuristic (guide tree + pairwise) is the only practical way.
+
+---
+
+## Verification
+Every algorithm passes Rosalind's hidden test cases. Sample inputs in `rosalind_*.txt`.
+
+---
+
+## Layout
+```
+├── *Alignment/           # 9 algos
+├── GC_Content/  PointMutations/
+├── DNA_to_RNA/  RNA_to_protein/
+├── DNA_strand_Comp/  DNA_to_proteins/
+├── Proteins_to_mRNA/  Nucleotids.py
+└── rosalind_*.txt
 ```
 
-## Implemented
+---
 
-The repository contains implementations covering:
-
-* **Global, local and semi-global alignment**
-* **Edit distance and alignment reconstruction**
-* **Constant and affine gap penalties**
-* **Multiple sequence alignment**
-* **Scoring matrices**
-* Related DNA/RNA and protein sequence transformations
-
-The more advanced alignment variants explore how changing the **scoring model** changes the underlying dynamic-programming formulation.
-
-## Key Idea
-
-A sequence-alignment problem can be viewed as a path through an alignment matrix:
-
-```text
-        Sequence B
-      ──────────────→
-     ┌───────────────┐
-Seq A│   DP Matrix   │
-     │               │
-     │       ↘       │
-     │         ↘     │
-     └───────────────┘
+## Run Any Algorithm
+```bash
+cd GlobalAlignment && python main.py < ../rosalind_*.txt
 ```
 
-Matches, mismatches and gaps correspond to different transitions, while the dynamic-programming recurrence determines the best-scoring path.
+---
 
-The repository was built to understand these algorithms by implementing them directly rather than treating alignment as a black-box library operation.
-
-## Repository Structure
-
-Each major alignment technique is kept in its own directory, including:
-
-```text
-AffineGapPenalty/
-AffineLocalAlignment/
-ConstantGapPenalty/
-EditDistance/
-EditDistanceAlignment/
-LocalAlignment/
-MultipleAlignment/
-SemiGlobalAlignment/
-ScoringMatrix/
-```
-
-The project was developed as a collection of solutions to problems from **Rosalind**.
-
-**Abdus Salam Khazi**
+**Author**: Abdus Salam Khazi  
+**Contact**: abduskhazi@gmail.com
